@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style.css">
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body>
+<!-- BODY CONTAINER -->
+	<div id="app" class="container">
+		<div class="col-lg-12">
+			<h1 class="text-center">{{ header.toUpperCase() }}</h1>
+		</div>
+		<hr>
+
+<!-- FIRST ROW START -->
+		<div class="row">
+			<div class="col-lg-6">
+				<form action="" method="post" class="form-vertical">
+					<div class="form-group">
+						<label>FIRSTNAME
+							<input type="text" v-model="firstName" placeholder="What's your First Name?" class="form-control" size="100%">
+						</label>
+					</div>
+
+					<div class="form-group">
+						<label>LASTNAME <br>
+							<input type="text" v-model="lastName" placeholder="What's your Last Name?" class="form-control" size="100%">
+						</label>
+					</div>
+
+					<div class="form-group">
+						<label>E-MAIL <br>
+							<input type="email" v-model="email" placeholder="What's your E-Mail?" class="form-control" size="100%">
+						</label>
+					</div>
+
+					<div class="form-group">
+						<label>MOBILE NUMBER <br>
+							<input type="text" v-model="mobile" placeholder="What's your Mobile Number?" class="form-control" size="100%">
+						</label>
+					</div>
+
+					<div class="form-group">
+						<label>ADDRESS <br>
+							<textarea id="" cols="55" rows="5" class="form-control" placeholder="What's your query?" v-model="address"></textarea>
+						</label>
+					</div>
+
+					<div class="form-group">
+						<input type="submit" class="btn btn-info btn-sm btn-block" value="SUBMIT">
+					</div>
+				</form>
+			</div>
+
+			<div class="name-display col-lg-6">
+				<p class="text-primary">{{ firstName.toUpperCase() }} {{ lastName.toUpperCase() }}</p>
+				<p class="text-primary">{{ email }}</p>
+				<p class="text-primary">{{ mobile }}</p>
+				<p class="text-primary">{{ address }}</p>
+			</div>
+		</div>
+		<!-- END OF FIRST ROW -->
+		<hr>
+
+<!-- SECOND ROW -->
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="col-lg-12">
+					<h5 class="text-center">Favourite Video Games</h5><hr>
+				</div>
+				<div class="col-lg-12">
+					<ul>
+						<li v-for="item in items">{{ item }}</li>
+					</ul>
+				</div>
+			</div>
+<!-- USER EVENTS -->
+			<div class="col-lg-4">
+				<div class="col-lg-12">
+					<h5 class="text-center">My To-do List (Event Handle)</h5><hr>
+				</div>
+
+				<div class="col-lg-12">
+					<input type="text" v-model="newTodo" size="100%" placeholder="New To-do ..." class="form-control" @keyup.enter="todoList.push(newTodo)">
+				</div><br>
+
+				<div class="col-lg-12">
+					<input type="submit" @click="todoList.push(newTodo)" value="ADD" class="btn btn-primary btn-sm btn-block">
+				</div><br>
+
+				<div class="col-lg-12">
+					<ul>
+						<li v-for="todo in todoList">{{ todo }}</li>
+					</ul>
+				</div>
+				
+			</div>
+<!-- VUE METHODS. A BETTER WAY TO HANDLE EVENTS-->
+			<div class="col-lg-4">
+				<div class="col-lg-12">
+					<h5 class="text-center">My To-do List (Better Event Handle)</h5><hr>
+				</div>
+
+				<div class="col-lg-12"  v-if="state === 'hidden'">
+					<input type="text" v-model="newShoppingList" size="100%" placeholder="New Shopping List..." class="form-control" @keyup.enter="saveItem">
+				</div><br>
+
+				<div class="text-center" v-if="state === 'block'">
+					<button class="btn btn-primary btn-lg bigBtn" @click="currentState('hidden')">ADD ITEMS</button>
+				</div>
+
+				<div class="col-lg-12" v-if="state === 'hidden'">
+					<div class="row">
+						<div class="col-lg-6">
+							<input type="button" @click="saveItem" value="SAVE" class="btn btn-primary btn-sm btn-block">
+						</div>
+						<div class="col-lg-6">
+							<input type="button" value="CANCEL" class="btn btn-danger btn-sm btn-block" @click="currentState('block')">
+						</div>
+					</div>
+				</div><br>
+
+				<div class="col-lg-12">
+					<ul>
+						<li v-for="shoppingList in shoppingLists">{{ shoppingList }}</li>
+					</ul>
+					<p class="text-center text-info" v-if="shoppingLists.length === 0">No items in your shopping list!</p>
+				</div>
+			</div>
+		</div>
+		<!-- END OF SECOND ROW -->
+		<hr>
+	</div>
+<!-- END OF BODY CONTAINER -->
+		<!-- FOOTER -->
+	<div class="container" id="footer-container">
+		<footer class="page-footer font-small unique-color-dark ">
+			<!-- First Footer Wrapper -->
+		    <div id="footerbg">
+		    	<!-- FOOTER CONTAINER -->
+		      <div class="container">
+		        <!-- Grid row-->
+		        <div class="row py-4 d-flex align-items-center">
+			          <!-- Grid column -->
+			          <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+			            <h6 class="mb-0">Get connected with us on social networks!</h6>
+			          </div>
+			          <!-- Grid column -->
+
+		          <!-- Grid column -->
+		          <div class="col-md-6 col-lg-7 text-center text-md-right" id="socials">
+
+		            <!-- Facebook -->
+		            <a class="fb-ic">
+		              <i class="fa fa-facebook white-text mr-4"> </i>
+		            </a>
+		            <!-- Twitter -->
+		            <a class="tw-ic">
+		              <i class="fa fa-twitter white-text mr-4"> </i>
+		            </a>
+		            <!-- Google +-->
+		            <a class="gplus-ic">
+		              <i class="fa fa-google-plus white-text mr-4"> </i>
+		            </a>
+		            <!--Linkedin -->
+		            <a class="li-ic">
+		              <i class="fa fa-linkedin white-text mr-4"> </i>
+		            </a>
+		            <!--Instagram-->
+		            <a class="ins-ic">
+		              <i class="fa fa-instagram white-text"> </i>
+		            </a>
+
+		          </div>
+		          <!-- Grid column -->
+		        </div>
+		        <!-- END Grid row-->
+		      </div>
+		      <!-- END Footer Container -->
+		    </div>
+		    <!-- First Footer Wrapper -->
+
+		    <!-- Footer Links -->
+		    <div class="container text-center text-md-left mt-5">
+
+		      <!-- Grid row -->
+		      <div class="row mt-3">
+
+		        <!-- Grid column -->
+		        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+		          <!-- Content -->
+		          <h6 class="text-uppercase font-weight-bold">Company name</h6>
+		          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+		          <p>Here you can use rows and columns here to organize your footer content. Lorem ipsum dolor sit amet, consectetur
+		            adipisicing elit.</p>
+		        </div>
+		        <!-- Grid column -->
+
+		        <!-- Grid column -->
+		        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+
+		          <!-- Links -->
+		          <h6 class="text-uppercase font-weight-bold">Products</h6>
+		          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+		          <p>
+		            <a href="#!">MDBootstrap</a>
+		          </p>
+		          <p>
+		            <a href="#!">MDWordPress</a>
+		          </p>
+		          <p>
+		            <a href="#!">BrandFlow</a>
+		          </p>
+		          <p>
+		            <a href="#!">Bootstrap Angular</a>
+		          </p>
+
+		        </div>
+		        <!-- Grid column -->
+
+		        <!-- Grid column -->
+		        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+		          <!-- Links -->
+		          <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+		          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+		          <p>
+		            <a href="#!">Your Account</a>
+		          </p>
+		          <p>
+		            <a href="#!">Become an Affiliate</a>
+		          </p>
+		          <p>
+		            <a href="#!">Shipping Rates</a>
+		          </p>
+		          <p>
+		            <a href="#!">Help</a>
+		          </p>
+
+		        </div>
+		        <!-- Grid column -->
+
+		        <!-- Grid column -->
+		        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+		          <!-- Links -->
+		          <h6 class="text-uppercase font-weight-bold">Contact</h6>
+		          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+		          <p>
+		            <i class="fa fa-home mr-3"></i> New York, NY 10012, US</p>
+		          <p>
+		            <i class="fa fa-envelope mr-3"></i> info@example.com</p>
+		          <p>
+		            <i class="fa fa-phone mr-3"></i> + 01 234 567 88</p>
+		          <p>
+		            <i class="fa fa-print mr-3"></i> + 01 234 567 89</p>
+
+		        </div>
+		        <!-- Grid column -->
+
+		      </div>
+		      <!-- Grid row -->
+
+		    </div>
+		    <!-- Footer Links -->
+
+		    <!-- Copyright -->
+		    <div class="footer-copyright text-center py-3">© 2018 Copyright:
+		      <a href=""> alexeis.com</a>
+		    </div>
+		    <!-- Copyright -->
+		  </footer>
+  		<!-- Footer -->
+	</div>
+	<!-- End footer container -->
+	
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+	<script>
+		new Vue({
+			el:"#app",
+			data:{
+				state: "block",
+				header: "This is Vue",
+				firstName: "",
+				lastName: "",
+				email: "",
+				mobile: "",
+				address: "",
+				items: ["tomb raider","just cause","mortal kombat 9", "outlast"],
+				todoList:[],
+				newTodo:"",
+				shoppingLists:[],
+				newShoppingList:"",
+			},
+			methods: {
+				saveItem: function(){
+					if (this.newShoppingList.length > 0) {
+						this.shoppingLists.push(this.newShoppingList);
+						this.newShoppingList = '';
+					}
+				},
+				currentState: function(newState){
+					this.state = newState;
+					this.newShoppingList = '';
+				}
+			}
+		});
+	</script>
+</body>
+</html>
